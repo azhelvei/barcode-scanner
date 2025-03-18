@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Finds Grocery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #166534;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #15803d;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #16a34a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fresh Finds Grocery</h1>
+        <p>Eat Fresh, Live Well: Your One-Stop Shop for Quality Groceries.</p>
+        <h2>Scan, Track, & Never Waste</h2>
+        <p>Our built-in expiration tracker automatically monitors your items.</p>
+        <div class="input-container">
+            <input type="text" id="barcode" placeholder="Enter Barcode">
+            <button onclick="handleScan()">Start Scanning</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="scanned-items">
+                <tr><td colspan="4">No items scanned yet.</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        let scannedItems = [];
+        function handleScan() {
+            let barcodeInput = document.getElementById("barcode");
+            let barcode = barcodeInput.value.trim();
+            if (barcode) {
+                let newItem = { id: scannedItems.length + 1, barcode, name: `Item ${barcode}`, status: "Fresh" };
+                scannedItems.push(newItem);
+                updateTable();
+                barcodeInput.value = "";
+            }
+        }
+        function updateTable() {
+            let tableBody = document.getElementById("scanned-items");
+            tableBody.innerHTML = "";
+            scannedItems.forEach(item => {
+                let row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.barcode}</td>
+                    <td>${item.name}</td>
+                    <td style='color: green; font-weight: bold;'>${item.status}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
